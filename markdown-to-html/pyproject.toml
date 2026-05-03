@@ -1,0 +1,11 @@
+[project]
+name = "markdown-to-html"
+version = "0.1.0"
+description = "Convert markdown to HTML with VS Code documentation styling"
+requires-python = ">=3.8"
+dependencies = [
+    "markdown>=3.4.0",
+]
+
+[tool.uv]
+dev-dependencies = []

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample</title>
+    <style>
+
+:root {
+    --vscode-bg: #1e1e1e;
+    --vscode-bg-light: #ffffff;
+    --vscode-text: #d4d4d4;
+    --vscode-text-light: #1e1e1e;
+    --vscode-accent: #007acc;
+    --vscode-border: #3c3c3c;
+    --vscode-code-bg: #1e1e1e;
+    --vscode-link: #3794ff;
+}
+
+[data-theme="light"] {
+    --vscode-bg: #ffffff;
+    --vscode-text: #1e1e1e;
+    --vscode-border: #e0e0e0;
+    --vscode-code-bg: #f5f5f5;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--vscode-text);
+    background-color: var(--vscode-bg);
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.25;
+}
+
+h1 {
+    font-size: 2rem;
+    border-bottom: 1px solid var(--vscode-border);
+    padding-bottom: 0.5rem;
+    margin-top: 0;
+}
+
+h2 {
+    font-size: 1.5rem;
+    border-bottom: 1px solid var(--vscode-border);
+    padding-bottom: 0.3rem;
+}
+
+h3 { font-size: 1.25rem; }
+h4 { font-size: 1rem; }
+
+p {
+    margin: 0 0 1rem 0;
+}
+
+a {
+    color: var(--vscode-link);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+code {
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 0.9em;
+    background-color: var(--vscode-code-bg);
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+}
+
+pre {
+    background-color: var(--vscode-code-bg);
+    border: 1px solid var(--vscode-border);
+    border-radius: 4px;
+    padding: 1rem;
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+pre code {
+    background-color: transparent;
+    padding: 0;
+    border-radius: 0;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+blockquote {
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
+    border-left: 4px solid var(--vscode-accent);
+    background-color: rgba(0, 122, 204, 0.1);
+    color: var(--vscode-text);
+}
+
+ul, ol {
+    margin: 1rem 0;
+    padding-left: 2rem;
+}
+
+li {
+    margin: 0.25rem 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1rem 0;
+}
+
+th, td {
+    border: 1px solid var(--vscode-border);
+    padding: 0.5rem 1rem;
+    text-align: left;
+}
+
+th {
+    background-color: var(--vscode-code-bg);
+    font-weight: 600;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid var(--vscode-border);
+    margin: 2rem 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.task-list-item {
+    list-style-type: none;
+    margin-left: -1.5rem;
+}
+
+.task-list-item input {
+    margin-right: 0.5rem;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+<h1 id="sample-markdown-document">Sample Markdown Document</h1>
+<p>This is a paragraph with <strong>bold</strong> text and <em>italic</em> text. You can also use ~~strikethrough~~.</p>
+<h2 id="code-examples">Code Examples</h2>
+<p>Here's a Python code block:</p>
+<pre class="codehilite"><code class="language-python">def greet(name: str) -&gt; str:
+    &quot;&quot;&quot;Return a greeting message.&quot;&quot;&quot;
+    return f&quot;Hello, {name}! Welcome to VS Code.&quot;
+
+# Example usage
+message = greet(&quot;World&quot;)
+print(message)
+</code></pre>
+
+<p>And a JavaScript example:</p>
+<pre class="codehilite"><code class="language-javascript">function calculate(a, b) {
+    return a + b;
+}
+
+const result = calculate(5, 3);
+console.log(`Result: ${result}`);
+</code></pre>
+
+<h2 id="lists">Lists</h2>
+<h3 id="unordered-list">Unordered List</h3>
+<ul>
+<li>First item</li>
+<li>Second item</li>
+<li>Nested item</li>
+<li>Another nested item</li>
+<li>Third item</li>
+</ul>
+<h3 id="ordered-list">Ordered List</h3>
+<ol>
+<li>Step one</li>
+<li>Step two</li>
+<li>Step three</li>
+</ol>
+<h2 id="blockquote">Blockquote</h2>
+<blockquote>
+<p>This is a blockquote. It can be used to highlight important information or quotes from external sources.</p>
+</blockquote>
+<h2 id="tables">Tables</h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Status</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Markdown parsing</td>
+<td>Complete</td>
+<td>Supports GFM</td>
+</tr>
+<tr>
+<td>Code highlighting</td>
+<td>Complete</td>
+<td>Multiple languages</td>
+</tr>
+<tr>
+<td>VS Code styling</td>
+<td>Complete</td>
+<td>Embedded CSS</td>
+</tr>
+</tbody>
+</table>
+<h2 id="links">Links</h2>
+<ul>
+<li><a href="https://code.visualstudio.com/docs">VS Code Documentation</a></li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=ms-python.python">Python Extension</a></li>
+</ul>
+<h2 id="horizontal-rule">Horizontal Rule</h2>
+<hr />
+<h2 id="inline-code">Inline Code</h2>
+<p>Use <code>console.log()</code> for debugging. You can also use inline <code>print("Hello")</code> in Python.</p>
+<h2 id="task-list">Task List</h2>
+<ul>
+<li>[x] Create markdown file</li>
+<li>[x] Convert to HTML</li>
+<li>[ ] Add more styling options</li>
+</ul>
+    </div>
+    <script>
+        // Theme toggle functionality
+        const theme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', theme === 'light' ? 'light' : 'dark');
+    </script>
+</body>
+</html>
