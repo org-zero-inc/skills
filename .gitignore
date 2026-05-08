@@ -1,0 +1,8 @@
+# 忽略全部
+/*
+
+# 手动指定需要管理的文件
+!/LICENSE
+!/README.md
+!/.gitignore
+!/skills

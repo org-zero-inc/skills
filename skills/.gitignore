@@ -1,0 +1,8 @@
+# 忽略全部
+/*
+
+# 以下是需要管理的Skills
+!/doc-convert
+!/flutter-apk-signing
+!/.gitignore
+

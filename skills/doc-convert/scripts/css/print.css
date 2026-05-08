@@ -1,0 +1,8 @@
+<style>
+@media print {
+  body { max-width: 100%; padding: 0; }
+  h1, h2, h3 { page-break-after: avoid; }
+  table { page-break-inside: avoid; }
+  pre { page-break-inside: avoid; }
+}
+</style>
