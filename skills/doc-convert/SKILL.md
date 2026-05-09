@@ -1,109 +1,109 @@
 ---
 name: doc-convert
-description: 文档格式转换工具，支持 Markdown、HTML、DOCX、PDF、PPTX、TXT 等常见格式互转。使用 Pandoc 处理格式转换，PDF 输出自动检测 LaTeX 引擎（pdflatex/xelatex/lualatex）或浏览器（Edge/Chrome/Firefox）Headless 模式。当用户提到"文档转换"、"md转html"、"md转pdf"、"md转docx"、"docx转md"、"html转md"、"把md转成网页"、"把docx转md"、"文档格式转换"、"markdown转word"、"word转markdown"、"markdown转pdf"、"html转pdf"、"docx转pdf"时触发此技能。即使用户没有明确说具体格式，只要涉及文档格式之间的转换，都应触发。
+description: Document format conversion tool supporting mutual conversion between common formats such as Markdown, HTML, DOCX, PDF, PPTX, and TXT. Uses Pandoc for format conversion, with PDF output auto-detecting LaTeX engine (pdflatex/xelatex/lualatex) or browser (Edge/Chrome/Firefox) Headless mode. Triggers this skill when users mention "document conversion", "md to html", "md to pdf", "md to docx", "docx to md", "html to md", "convert md to webpage", "convert docx to md", "document format conversion", "markdown to word", "word to markdown", "markdown to pdf", "html to pdf", "docx to pdf". Even if the user doesn't specify an exact format, this skill should trigger whenever document format conversion is involved.
 ---
 
-# 文档格式转换
+# Document Format Conversion
 
-使用 Pandoc 实现常见文档格式之间的互相转换，脚本根据文件扩展名自动识别输入/输出格式。跨平台统一使用 Python 脚本（Windows/Linux/macOS）。
+Uses Pandoc to convert between common document formats. The script automatically identifies input/output formats based on file extensions. Cross-platform unified Python script (Windows/Linux/macOS).
 
-## 前置条件
+## Prerequisites
 
-- **Pandoc** 必须已安装。运行 `pandoc --version` 检查，如果未安装：
+- **Pandoc** must be installed. Run `pandoc --version` to check. If not installed:
   - Windows: `scoop install pandoc`
   - macOS: `brew install pandoc`
-  - Linux: `sudo apt install pandoc` 或 `sudo dnf install pandoc`
+  - Linux: `sudo apt install pandoc` or `sudo dnf install pandoc`
 
-- **PDF 输出**有两种路径（脚本自动检测，优先使用 LaTeX 引擎）：
-  1. **LaTeX 引擎**（优先）：检测 `pdflatex` > `xelatex` > `lualatex`，通过 Pandoc 的 `--pdf-engine` 直接生成 PDF
-  2. **浏览器 Headless**（回退）：按 `Edge` > `Chrome` > `Firefox` 顺序检测，将 HTML 渲染为 PDF
+- **PDF output** has two paths (script auto-detects, preferring LaTeX engine):
+  1. **LaTeX engine** (preferred): Detects `pdflatex` > `xelatex` > `lualatex`, generates PDF directly via Pandoc's `--pdf-engine`
+  2. **Browser Headless** (fallback): Detects in order `Edge` > `Chrome` > `Firefox`, renders HTML to PDF
 
-## 支持的转换路径
+## Supported Conversion Paths
 
-| 源格式 | →HTML | →PDF | →DOCX | →MD | →PPTX | →TXT |
-|--------|-------|------|-------|-----|-------|------|
-| MD     | ✅    | ✅   | ✅    | —   | ✅    | ✅   |
-| HTML   | —     | ✅   | ✅    | ✅  | —     | ✅   |
-| DOCX   | ✅    | ✅   | —     | ✅  | —     | ✅   |
-| ODT    | ✅    | ✅   | ✅    | ✅  | —     | ✅   |
-| TXT    | ✅    | ✅   | ✅    | ✅  | —     | —    |
+| Source Format | →HTML | →PDF | →DOCX | →MD | →PPTX | →TXT |
+|---------------|-------|------|-------|-----|-------|------|
+| MD            | ✅    | ✅   | ✅    | —   | ✅    | ✅   |
+| HTML          | —     | ✅   | ✅    | ✅  | —     | ✅   |
+| DOCX          | ✅    | ✅   | —     | ✅  | —     | ✅   |
+| ODT           | ✅    | ✅   | ✅    | ✅  | —     | ✅   |
+| TXT           | ✅    | ✅   | ✅    | ✅  | —     | —    |
 
-扩展名映射：`.md/.markdown`→Markdown, `.html/.htm`→HTML, `.docx`→DOCX, `.odt`→ODT, `.pdf`→PDF, `.pptx`→PPTX, `.txt`→纯文本, `.tex`→LaTeX, `.rst`→reStructuredText, `.org`→Org-mode, `.epub`→EPUB
+Extension mapping: `.md/.markdown`→Markdown, `.html/.htm`→HTML, `.docx`→DOCX, `.odt`→ODT, `.pdf`→PDF, `.pptx`→PPTX, `.txt`→Plain text, `.tex`→LaTeX, `.rst`→reStructuredText, `.org`→Org-mode, `.epub`→EPUB
 
-## 核心流程
+## Core Workflow
 
-### 1. 确定输入和输出
+### 1. Determine Input and Output
 
-用户提供输入文件路径，可选指定输出文件路径。脚本根据扩展名自动识别格式：
+The user provides an input file path, optionally specifying an output file path. The script identifies formats based on extensions:
 
-- 如果用户只提供输入文件，**默认输出格式**：
-  - `.md` → `.html`（GitHub 风格）
+- If the user only provides an input file, **default output format**:
+  - `.md` → `.html` (GitHub style)
   - `.docx` → `.md`
   - `.html` → `.md`
-  - 其他 → `.html`
+  - Others → `.html`
 
-- 如果用户明确指定输出文件（如 `output.pdf`），则按输出扩展名确定目标格式
+- If the user explicitly specifies an output file (e.g., `output.pdf`), the target format is determined by the output extension
 
-### 2. 执行转换
+### 2. Execute Conversion
 
-使用 `uv run python` 调用 skill 目录下的 `scripts/convert.py`：
+Use `uv run python` to call `scripts/convert.py` in the skill directory:
 
 ```bash
-uv run python "<skill-dir>/scripts/convert.py" --in-file "<输入文件>" [--out-file "<输出文件>"] [--title "<标题>"] [--toc] [--no-preview]
+uv run python "<skill-dir>/scripts/convert.py" --in-file "<input-file>" [--out-file "<output-file>"] [--title "<title>"] [--toc] [--no-preview]
 ```
 
-**参数说明：**
+**Parameter Description:**
 
-| 参数 | 必需 | 说明 |
-|------|------|------|
-| `--in-file` | 是 | 输入文件路径 |
-| `--out-file` | 否 | 输出文件路径，默认根据输入自动推断 |
-| `--title` | 否 | 文档标题，默认取文件名 |
-| `--toc` | 否 | 生成目录（Table of Contents） |
-| `--no-preview` | 否 | 不自动打开预览（转换完成后默认自动打开） |
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| `--in-file` | Yes | Input file path |
+| `--out-file` | No | Output file path, auto-inferred from input by default |
+| `--title` | No | Document title, defaults to filename |
+| `--toc` | No | Generate Table of Contents |
+| `--no-preview` | No | Do not auto-open preview (preview opens automatically after conversion by default) |
 
-### 3. PDF 输出引擎检测逻辑
+### 3. PDF Output Engine Detection Logic
 
-当目标格式为 PDF 时，脚本按以下顺序自动检测可用引擎：
+When the target format is PDF, the script auto-detects available engines in the following order:
 
 ```
 1. pdflatex  ─┐
-2. xelatex   ─┤ LaTeX 引擎（Pandoc --pdf-engine 直接生成）
+2. xelatex   ─┤ LaTeX engine (Pandoc --pdf-engine direct generation)
 3. lualatex  ─┘
 4. Edge      ─┐
-5. Chrome    ─┤ 浏览器 Headless（HTML → PDF 两步转换）
+5. Chrome    ─┤ Browser Headless (HTML → PDF two-step conversion)
 6. Firefox   ─┘
 ```
 
-- **LaTeX 引擎**：直接通过 Pandoc 的 `--pdf-engine` 参数生成 PDF，输出质量更高（支持数学公式、矢量图形），无需中间 HTML
-- **浏览器 Headless**：先将内容转为带 GitHub CSS 的临时 HTML，再调用浏览器渲染为 PDF
-  - Edge/Chrome 使用 `--headless --disable-gpu --no-pdf-header-footer --print-to-pdf` 参数
-  - Firefox 使用 `--headless --print-to-pdf` 参数
+- **LaTeX engine**: Generates PDF directly via Pandoc's `--pdf-engine` parameter, higher output quality (supports math formulas, vector graphics), no intermediate HTML needed
+- **Browser Headless**: First converts content to temporary HTML with GitHub CSS, then calls the browser to render as PDF
+  - Edge/Chrome uses `--headless --disable-gpu --no-pdf-header-footer --print-to-pdf` parameters
+  - Firefox uses `--headless --print-to-pdf` parameters
 
-### 4. 格式特殊处理
+### 4. Format-Specific Handling
 
-**→ HTML：**
-- 自动应用 GitHub 风格 CSS（样式文件在 `scripts/css/github.css`）
-- 居中布局，最大宽度 980px，左右 padding 45px
+**→ HTML:**
+- Automatically applies GitHub-style CSS (stylesheet at `scripts/css/github.css`)
+- Centered layout, max width 980px, left/right padding 45px
 
-**→ PDF（LaTeX 引擎）：**
-- Pandoc 直接调用 LaTeX 引擎编译输出
-- 数学公式、代码高亮等原生支持
+**→ PDF (LaTeX engine):**
+- Pandoc directly invokes LaTeX engine to compile output
+- Native support for math formulas, syntax highlighting, etc.
 
-**→ PDF（浏览器回退，两步转换）：**
-1. 先通过 Pandoc 生成带 GitHub CSS 的 HTML（临时文件）
-2. 再调用浏览器 Headless 将 HTML 渲染为 PDF
-- 自动添加打印样式（`scripts/css/print.css`）：避免标题/表格/代码块被分页截断
-- 移除页眉页脚（Edge/Chrome 支持 `--no-pdf-header-footer`）
-- 临时 HTML 文件在 PDF 生成后自动清理
+**→ PDF (Browser fallback, two-step conversion):**
+1. First generates HTML with GitHub CSS via Pandoc (temporary file)
+2. Then calls Browser Headless to render HTML to PDF
+- Automatically adds print styles (`scripts/css/print.css`): prevents headings/tables/code blocks from being split across pages
+- Removes headers and footers (Edge/Chrome supports `--no-pdf-header-footer`)
+- Temporary HTML file is automatically cleaned up after PDF generation
 
-### 5. 典型用法
+### 5. Typical Usage
 
 ```bash
-# MD → HTML（默认）
+# MD → HTML (default)
 uv run python scripts/convert.py --in-file report.md
 
-# MD → PDF（自动检测 LaTeX 或浏览器引擎）
+# MD → PDF (auto-detect LaTeX or browser engine)
 uv run python scripts/convert.py --in-file report.md --out-file report.pdf
 
 # MD → DOCX
@@ -118,17 +118,17 @@ uv run python scripts/convert.py --in-file document.docx
 # HTML → MD
 uv run python scripts/convert.py --in-file page.html
 
-# 带目录
+# With table of contents
 uv run python scripts/convert.py --in-file report.md --out-file report.pdf --toc
 
-# 不自动打开预览
+# Without auto-opening preview
 uv run python scripts/convert.py --in-file report.md --no-preview
 ```
 
-## 批量转换
+## Batch Conversion
 
 ```bash
-# 目录下所有 md 转 pdf（Bash / PowerShell 通用）
+# Convert all md files in directory to pdf (Bash / PowerShell)
 # Bash:
 for f in *.md; do
     uv run python scripts/convert.py --in-file "$f" --out-file "${f%.md}.pdf" --no-preview
@@ -140,13 +140,13 @@ Get-ChildItem -Filter "*.md" | ForEach-Object {
 }
 ```
 
-## 错误处理
+## Error Handling
 
-| 问题 | 脚本行为 |
-|------|----------|
-| Pandoc 未安装 | 报错并提示安装命令 |
-| 无 LaTeX 引擎也无浏览器（需要 PDF） | 报错，提示安装 LaTeX 引擎或浏览器 |
-| 输入文件不存在 | 报错退出 |
-| 不支持的格式 | 报错并列出支持的格式列表 |
-| 输入输出文件相同 | 报错退出 |
-| PDF 生成超时（15秒） | 报错，保留中间 HTML 文件 |
+| Issue | Script Behavior |
+|-------|-----------------|
+| Pandoc not installed | Error with installation command hint |
+| No LaTeX engine and no browser (PDF needed) | Error, prompting to install a LaTeX engine or browser |
+| Input file does not exist | Error and exit |
+| Unsupported format | Error with supported format list |
+| Input and output files are the same | Error and exit |
+| PDF generation timeout (15 seconds) | Error, intermediate HTML file preserved |

@@ -2,8 +2,11 @@
 /*
 
 # 以下是需要管理的Skills
+!/bug-fixer
 !/doc-convert
 !/flutter-apk-signing
 !/windows-system-update
+
+# 以下是需要管理的其他文件
 !/.gitignore
 
