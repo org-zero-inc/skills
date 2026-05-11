@@ -2,6 +2,7 @@
 /*
 
 # 以下是需要管理的Skills
+!/android-sdk-helper
 !/bug-fixer
 !/doc-convert
 !/flutter-apk-signing
