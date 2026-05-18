@@ -7,6 +7,7 @@
 !/curl-converter
 !/doc-convert
 !/flutter-apk-signing
+!/picture-downloader
 !/windows-system-update
 
 # 以下是需要管理的其他文件
