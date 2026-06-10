@@ -1,10 +1,21 @@
 # 忽略全部
 /*
 
-# 手动指定需要管理的文件
+# 明确指定需要纳入管理的内容
+!/skills
+!/themes
+!/AGENTS.md
+!/.gitignore
 !/LICENSE
 !/README.md
-!/.gitignore
 
-# 手动指定需要管理的目录
-!/skills
+# 排除 Python 缓存
+**/__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+*.egg-info/
+.uv/
+
+# 排除 Node.js 依赖
+**/node_modules/
