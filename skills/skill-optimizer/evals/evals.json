@@ -1,0 +1,46 @@
+{
+  "skill_name": "skill-optimizer",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "帮我评审一下 ex-sdk-helper 这个 skill 的设计质量，按照 5 维度框架来",
+      "expected_output": "输出包含 5 个维度的逐项分析、评级和改进建议",
+      "expectations": [
+        "运行了 audit.py 进行表面检查",
+        "读取了 framework/probes/ 下的引导问题",
+        "对每个维度给出了 🟢/🟡/🔴 评级",
+        "每个发现引用了 SKILL.md 的具体位置",
+        "给出了综合总评和优先级排序"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "评价一下 skill-optimizer 自身的设计质量",
+      "expected_output": "对自身进行完整的 5 维度评审",
+      "expectations": [
+        "没有因为自检而跳过任何维度",
+        "能发现自身的设计问题",
+        "报告格式完整"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "看我这个 skill 的 SKILL.md 结构有什么问题",
+      "expected_output": "触发 skill-optimizer 进行表面检查",
+      "expectations": [
+        "运行了 audit.py 检查 YAML 完整性",
+        "检查了引用文件是否存在",
+        "只做表面检查，不做深度评审"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "帮我把 Python 代码中的 bug 找出来",
+      "expected_output": "不触发 skill-optimizer（通用调试任务，不涉及 Skill 设计评审）",
+      "expectations": [
+        "不运行 audit.py",
+        "不输出 Skill 评审报告"
+      ]
+    }
+  ]
+}

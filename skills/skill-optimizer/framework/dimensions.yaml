@@ -1,0 +1,48 @@
+# Skill 设计质量评审维度定义
+# 每个维度包含：核心问题、权重、关键考察点
+
+dimensions:
+  - id: triggerability
+    name: 可触发性
+    weight: high
+    question: "LLM 能否正确决定调用此 Skill？"
+    checks:
+      - description 是否包含足够的触发信号
+      - 边界约束是否在 description 中声明
+      - 是否覆盖了模糊触发场景
+
+  - id: usability
+    name: 可用性
+    weight: high
+    question: "LLM 调用后能否顺利完成任务？"
+    checks:
+      - 输入输出格式是否明确
+      - 参数校验是否完善
+      - 工作流步骤是否清晰可执行
+
+  - id: safety
+    name: 安全性
+    weight: high
+    question: "是否有不可逆伤害的风险？"
+    checks:
+      - 是否涉及敏感操作
+      - 是否有 HITL 人工确认机制
+      - 输入是否有充分校验
+
+  - id: cohesion
+    name: 内聚性
+    weight: medium
+    question: "职责是否单一、边界是否清晰？"
+    checks:
+      - 是否只解决一个明确的问题
+      - 是否与其他 Skill 有职责重叠
+      - 是否依赖了不该依赖的内容
+
+  - id: maintainability
+    name: 可维护性
+    weight: low
+    question: "后续迭代是否容易？"
+    checks:
+      - 文件大小和结构是否合理
+      - 是否有测试用例
+      - 是否有过时或冗余内容
