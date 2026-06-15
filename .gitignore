@@ -19,3 +19,29 @@
 
 # 排除 Node.js 依赖
 **/node_modules/
+
+# pnpm 依赖目录（核心，绝对不要提交）
+node_modules/
+
+# pnpm 在当前盘符下生成的本地存储凭证（如果有的话）
+.pnpm-store/
+
+# Playwright 浏览器二进制文件默认缓存目录（如果你的项目用到了 Playwright）
+#（注：Mac/Linux 默认在 ~/.cache，但 Windows 偶尔会生成在项目内或需要额外排除）
+.cache/
+
+# 调试日志
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# 本地环境变量配置文件（包含敏感 API 密钥等，切勿提交）
+.env
+.env.local
+.env.*.local
+
+# 编译输出目录（根据你的构建工具有所不同，如 Vite/Webpack/Next.js 等）
+dist/
+build/
+.next/
