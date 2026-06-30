@@ -2,6 +2,7 @@
 /*
 
 # 明确指定需要纳入管理的内容
+!/design
 !/skills
 !/themes
 !/AGENTS.md
